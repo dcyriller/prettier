@@ -174,7 +174,7 @@ function print(path, options, print) {
       return group(
         concat([
           n.escaped === false ? "{{{" : "{{",
-          printPathParams(path, print, { group: false }),
+          printPathParams(path, print),
           isConcat ? "" : softline,
           n.escaped === false ? "}}}" : "}}"
         ])
@@ -262,6 +262,7 @@ function print(path, options, print) {
           }
         }
       }
+
       return n.chars
         .replace(/^\s+/, leadingSpace)
         .replace(/\s+$/, trailingSpace);
@@ -358,16 +359,11 @@ function getParams(path, print) {
   return parts;
 }
 
-function printPathParams(path, print, options) {
+function printPathParams(path, print) {
   let parts = [];
-  options = Object.assign({ group: true }, options || {});
 
   parts.push(printPath(path, print));
   parts = parts.concat(getParams(path, print));
-
-  if (!options.group) {
-    return indent(join(line, parts));
-  }
 
   return indent(group(join(line, parts)));
 }

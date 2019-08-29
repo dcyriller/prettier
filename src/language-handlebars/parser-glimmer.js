@@ -1,6 +1,7 @@
 "use strict";
 
 const createError = require("../common/parser-create-error");
+const preprocess = require("./preprocess");
 
 function parse(text) {
   try {
@@ -28,6 +29,7 @@ module.exports = {
   parsers: {
     glimmer: {
       parse,
+      preprocess,
       astFormat: "glimmer",
       locStart(node) {
         return node.loc && node.loc.start;
