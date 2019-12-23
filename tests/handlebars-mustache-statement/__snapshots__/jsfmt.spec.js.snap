@@ -9,10 +9,22 @@ printWidth: 80
 <GlimmerComponent @progress={{aPropertyEngdingAfterEightiethColumnToHighlightAWeirdClosingParenIssue}}
 />
 
+<div>
+  {{t "a-long-translation-key-with-param" firstParam=(format this.amount) secondParam=(format this.secondAmount)}}
+</div>
+
 =====================================output=====================================
 <GlimmerComponent
   @progress={{aPropertyEngdingAfterEightiethColumnToHighlightAWeirdClosingParenIssue}}
 />
+
+<div>
+  {{t
+    "a-long-translation-key-with-param"
+    firstParam=(format this.amount)
+    secondParam=(format this.secondAmount)
+  }}
+</div>
 ================================================================================
 `;
 
@@ -26,10 +38,22 @@ singleQuote: true
 <GlimmerComponent @progress={{aPropertyEngdingAfterEightiethColumnToHighlightAWeirdClosingParenIssue}}
 />
 
+<div>
+  {{t "a-long-translation-key-with-param" firstParam=(format this.amount) secondParam=(format this.secondAmount)}}
+</div>
+
 =====================================output=====================================
 <GlimmerComponent
   @progress={{aPropertyEngdingAfterEightiethColumnToHighlightAWeirdClosingParenIssue}}
 />
+
+<div>
+  {{t
+    'a-long-translation-key-with-param'
+    firstParam=(format this.amount)
+    secondParam=(format this.secondAmount)
+  }}
+</div>
 ================================================================================
 `;
 
