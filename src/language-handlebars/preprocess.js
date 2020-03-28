@@ -318,19 +318,21 @@ function addIsSpaceSensitive(/* options */) {
             isTrailingSpaceSensitive: isTrailingSpaceSensitiveNode(child, node),
           };
         })
-        .map((child, index, children) => ({
-          ...child,
-          isLeadingSpaceSensitive:
-            index === 0
-              ? child.isLeadingSpaceSensitive
-              : children[index - 1].isTrailingSpaceSensitive &&
-                child.isLeadingSpaceSensitive,
-          isTrailingSpaceSensitive:
-            index === children.length - 1
-              ? child.isTrailingSpaceSensitive
-              : children[index + 1].isLeadingSpaceSensitive &&
-                child.isTrailingSpaceSensitive,
-        }));
+        .map((child, index, children) => {
+          return {
+            ...child,
+            isLeadingSpaceSensitive:
+              index === 0
+                ? child.isLeadingSpaceSensitive
+                : children[index - 1].isTrailingSpaceSensitive &&
+                  child.isLeadingSpaceSensitive,
+            isTrailingSpaceSensitive:
+              index === children.length - 1
+                ? child.isTrailingSpaceSensitive
+                : children[index + 1].isLeadingSpaceSensitive &&
+                  child.isTrailingSpaceSensitive,
+          };
+        });
 
       return node;
     },

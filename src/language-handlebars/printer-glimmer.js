@@ -67,13 +67,11 @@ function print(path, options, print) {
         return concat([group(printStartingTag(path, print)), bim]);
       }
 
-      const isWhitespaceOnly = n.children.every((n) => isWhitespaceNode(n));
-
       return concat([
         group(printStartingTag(path, print)),
         group(
           concat([
-            isWhitespaceOnly ? "" : indent(printChildren(path, options, print)),
+            printChildren(path, options, print),
             n.children.length ? hardline : "",
             concat(["</", n.tag, ">"]),
           ])
@@ -236,37 +234,7 @@ function print(path, options, print) {
         ]);
       }
 
-      if (
-        trailingLineBreaksCount === 0 &&
-        isNextNodeOfSomeType(path, ["MustacheStatement"])
-      ) {
-        trailingSpace = " ";
-      }
-
-      if (
-        leadingLineBreaksCount === 0 &&
-        isPreviousNodeOfSomeType(path, ["MustacheStatement"])
-      ) {
-        leadingSpace = " ";
-      }
-
-      if (isFirstElement) {
-        leadingLineBreaksCount = 0;
-        leadingSpace = "";
-      }
-
-      if (isLastElement) {
-        trailingLineBreaksCount = 0;
-        trailingSpace = "";
-      }
-
-      return concat([
-        ...generateHardlines(leadingLineBreaksCount, maxLineBreaksToPreserve),
-        n.chars
-          .replace(/^[\s ]+/g, leadingSpace)
-          .replace(/[\s ]+$/, trailingSpace),
-        ...generateHardlines(trailingLineBreaksCount, maxLineBreaksToPreserve),
-      ]);
+      return n.chars;
     }
     case "MustacheCommentStatement": {
       const dashes = n.value.includes("}}") ? "--" : "";
@@ -332,14 +300,58 @@ function printAttributesLike(path, print) {
 }
 
 function printChildren(path, options, print) {
-  return concat(
-    path.map((childPath, childIndex) => {
-      if (childIndex === 0) {
-        return concat([softline, print(childPath, options, print)]);
-      }
+  const node = path.getValue();
 
-      return print(childPath, options, print);
-    }, "children")
+  if (
+    !node.children.length &&
+    (node.hasDanglingSpaces || !node.isDanglingSpaceSensitive)
+  ) {
+    return hardline;
+  }
+
+  return indent(
+    concat(
+      path.map((childPath, childIndex) => {
+        const parentChildren = path.getParentNode(0).children;
+        const childNode = childPath.getValue();
+        const isFirstChild = childIndex === 0;
+        const isLastChild = childIndex === parentChildren.length - 1;
+        const isLonelyChild = parentChildren.length === 1;
+
+        const parts = [];
+        debugger;
+
+        if (childNode.isLeadingSpaceSensitive && childNode.hasLeadingSpaces) {
+          parts.push(line);
+        } else if (!childNode.isLeadingSpaceSensitive) {
+          parts.push(hardline);
+        }
+
+        const child = print(childPath, options, print);
+        parts.push(child);
+
+        if (isLastChild) {
+          if (
+            childNode.isTrailingSpaceSensitive &&
+            childNode.hasTrailingSpaces
+          ) {
+            parts.push(line);
+          } else if (!childNode.isTrailingSpaceSensitive) {
+            parts.push(hardline);
+          }
+        }
+
+        // if (childNode.hasTrailingSpaces) {
+        //   if (childNode.isTrailingSpaceSensitive) {
+        //     parts.push(line);
+        //   } else {
+        //     parts.push(hardline);
+        //   }
+        // }
+
+        return concat(parts);
+      }, "children")
+    )
   );
 }
 
