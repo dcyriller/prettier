@@ -1,6 +1,7 @@
 "use strict";
 
 const clean = require("./clean");
+// const preprocess = require("./preprocess");
 
 const {
   concat,
@@ -649,6 +650,7 @@ function locationToOffset(source, line, column) {
 }
 
 module.exports = {
+  // preprocess,
   print,
   massageAstNode: clean,
 };
