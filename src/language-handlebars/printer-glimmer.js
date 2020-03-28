@@ -72,7 +72,6 @@ function print(path, options, print) {
         group(
           concat([
             printChildren(path, options, print),
-            n.children.length ? hardline : "",
             concat(["</", n.tag, ">"]),
           ])
         ),
@@ -309,50 +308,43 @@ function printChildren(path, options, print) {
     return hardline;
   }
 
-  return indent(
-    concat(
-      path.map((childPath, childIndex) => {
-        const parentChildren = path.getParentNode(0).children;
-        const childNode = childPath.getValue();
-        const isFirstChild = childIndex === 0;
-        const isLastChild = childIndex === parentChildren.length - 1;
-        const isLonelyChild = parentChildren.length === 1;
+  const parts = [
+    indent(
+      concat(
+        path.map((childPath) => {
+          const childNode = childPath.getValue();
 
-        const parts = [];
-        debugger;
+          const parts = [];
 
-        if (childNode.isLeadingSpaceSensitive && childNode.hasLeadingSpaces) {
-          parts.push(line);
-        } else if (!childNode.isLeadingSpaceSensitive) {
-          parts.push(hardline);
-        }
-
-        const child = print(childPath, options, print);
-        parts.push(child);
-
-        if (isLastChild) {
-          if (
-            childNode.isTrailingSpaceSensitive &&
-            childNode.hasTrailingSpaces
-          ) {
+          if (childNode.isLeadingSpaceSensitive && childNode.hasLeadingSpaces) {
             parts.push(line);
-          } else if (!childNode.isTrailingSpaceSensitive) {
+          } else if (!childNode.isLeadingSpaceSensitive) {
             parts.push(hardline);
           }
-        }
 
-        // if (childNode.hasTrailingSpaces) {
-        //   if (childNode.isTrailingSpaceSensitive) {
-        //     parts.push(line);
-        //   } else {
-        //     parts.push(hardline);
-        //   }
-        // }
+          const child = print(childPath, options, print);
+          parts.push(child);
 
-        return concat(parts);
-      }, "children")
-    )
-  );
+          return concat(parts);
+        }, "children")
+      )
+    ),
+  ];
+
+  if (node.children.length) {
+    const lastChildNode = node.children[node.children.length - 1];
+
+    if (
+      lastChildNode.isTrailingSpaceSensitive &&
+      lastChildNode.hasTrailingSpaces
+    ) {
+      parts.push(line);
+    } else if (!lastChildNode.isTrailingSpaceSensitive) {
+      parts.push(hardline);
+    }
+  }
+
+  return concat(parts);
 }
 
 function printStartingTagEndMarker(node) {

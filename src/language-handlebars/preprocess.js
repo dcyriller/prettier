@@ -304,6 +304,15 @@ function addIsSpaceSensitive(/* options */) {
         node.children.length === 1 &&
         isNodeOfSomeType(node.children[0], ["TextNode"])
       ) {
+        const child = node.children[0];
+        child.isLeadingSpaceSensitive = isLeadingSpaceSensitiveNode(
+          child,
+          node
+        );
+        child.isTrailingSpaceSensitive = isTrailingSpaceSensitiveNode(
+          child,
+          node
+        );
         node.isDanglingSpaceSensitive = isDanglingSpaceSensitiveCssDisplay(
           node.cssDisplay
         );
@@ -312,26 +321,28 @@ function addIsSpaceSensitive(/* options */) {
 
       node.children = node.children
         .map((child) => {
-          return {
-            ...child,
-            isLeadingSpaceSensitive: isLeadingSpaceSensitiveNode(child, node),
-            isTrailingSpaceSensitive: isTrailingSpaceSensitiveNode(child, node),
-          };
+          child.isLeadingSpaceSensitive = isLeadingSpaceSensitiveNode(
+            child,
+            node
+          );
+          child.isTrailingSpaceSensitive = isTrailingSpaceSensitiveNode(
+            child,
+            node
+          );
+          return child;
         })
         .map((child, index, children) => {
-          return {
-            ...child,
-            isLeadingSpaceSensitive:
-              index === 0
-                ? child.isLeadingSpaceSensitive
-                : children[index - 1].isTrailingSpaceSensitive &&
-                  child.isLeadingSpaceSensitive,
-            isTrailingSpaceSensitive:
-              index === children.length - 1
-                ? child.isTrailingSpaceSensitive
-                : children[index + 1].isLeadingSpaceSensitive &&
-                  child.isTrailingSpaceSensitive,
-          };
+          child.isLeadingSpaceSensitive =
+            index === 0
+              ? child.isLeadingSpaceSensitive
+              : children[index - 1].isTrailingSpaceSensitive &&
+                child.isLeadingSpaceSensitive;
+          child.isTrailingSpaceSensitive =
+            index === children.length - 1
+              ? child.isTrailingSpaceSensitive
+              : children[index + 1].isLeadingSpaceSensitive &&
+                child.isTrailingSpaceSensitive;
+          return child;
         });
 
       return node;
