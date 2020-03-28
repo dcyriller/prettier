@@ -223,30 +223,41 @@ function print(path, options, print) {
             trailingSpace = " ";
           }
         }
-      } else {
-        if (
-          trailingLineBreaksCount === 0 &&
-          isNextNodeOfSomeType(path, ["MustacheStatement"])
-        ) {
-          trailingSpace = " ";
-        }
 
-        if (
-          leadingLineBreaksCount === 0 &&
-          isPreviousNodeOfSomeType(path, ["MustacheStatement"])
-        ) {
-          leadingSpace = " ";
-        }
+        return concat([
+          ...generateHardlines(leadingLineBreaksCount, maxLineBreaksToPreserve),
+          n.chars
+            .replace(/^[\s ]+/g, leadingSpace)
+            .replace(/[\s ]+$/, trailingSpace),
+          ...generateHardlines(
+            trailingLineBreaksCount,
+            maxLineBreaksToPreserve
+          ),
+        ]);
+      }
 
-        if (isFirstElement) {
-          leadingLineBreaksCount = 0;
-          leadingSpace = "";
-        }
+      if (
+        trailingLineBreaksCount === 0 &&
+        isNextNodeOfSomeType(path, ["MustacheStatement"])
+      ) {
+        trailingSpace = " ";
+      }
 
-        if (isLastElement) {
-          trailingLineBreaksCount = 0;
-          trailingSpace = "";
-        }
+      if (
+        leadingLineBreaksCount === 0 &&
+        isPreviousNodeOfSomeType(path, ["MustacheStatement"])
+      ) {
+        leadingSpace = " ";
+      }
+
+      if (isFirstElement) {
+        leadingLineBreaksCount = 0;
+        leadingSpace = "";
+      }
+
+      if (isLastElement) {
+        trailingLineBreaksCount = 0;
+        trailingSpace = "";
       }
 
       return concat([
