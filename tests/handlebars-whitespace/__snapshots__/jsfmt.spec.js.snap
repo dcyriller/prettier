@@ -34,7 +34,19 @@ printWidth: 40
 </div>;
 
 =====================================output=====================================
-{{! after }}
+{{!-- after --}}
+<span>
+    foo
+    <span>bar</span>
+</span>
+
+{{!-- before --}}
+<span>
+  <span>bar</span>
+  foo
+</span>
+
+{{!-- within --}}
 <span>
   foo
   <span>
@@ -42,54 +54,26 @@ printWidth: 40
   </span>
 </span>
 
-{{! before }}
-<span>
-  <span>
-    bar
-  </span>
-  foo
-</span>
-
-{{! within }}
-<span>
-  foo
-  <span>
-    bar
-  </span>
-</span>
-
-{{! break components }}
+{{!-- break components --}}
 <div>
   <SuperSelect>
     <p>
-      foo
-      <span>
-        bar bar bar
-      </span>
+      foo<span>bar bar bar</span>
     </p>
     <h1>
-      <span>
-        <em>
-          yep
-        </em>
-      </span>
+      <span><em>yep</em></span>
     </h1>
   </SuperSelect>
-  <h2>
-    nope
-  </h2>
+  <h2>nope</h2>
 </div>
 
 <div>
-  hello
-  <strong>
-    hi
-  </strong>
-
-  <foo>
-    sdkflsdfjk
-  </foo>
-</div>
+   hello
+   <strong>hi</strong>
+   <foo>
+     sdkflsdfjk
+   </foo>
+</div>;
 ;
 ================================================================================
 `;
@@ -112,34 +96,27 @@ printWidth: 40
 <span>{{propE}} {{propF}}</span>
 <span>{{propG}}{{propH}}</span>
 
-  
+
 
 hey
 
 =====================================output=====================================
 <p>
-  Hi {{firstName}} {{
-    lastName
-  }} , welcome!
+  Hi {{firstName}} {{lastName}}
+  , welcome!
 </p>
 {{#component propA}}
   for {{propB}} do {{propC}} f
 {{/component}}
 {{#component propA}}
   for {{propB}}
-  <span>
-    name
-  </span>
-  do {{propC}} f
+  <span>name</span>do
+  {{propC}} f
 {{/component}}
 {{propA}} {{propB}}
 {{propC}}{{propD}}
-<span>
-  {{propE}} {{propF}}
-</span>
-<span>
-  {{propG}}{{propH}}
-</span>
+<span>{{propE}} {{propF}}</span>
+<span>{{propG}}{{propH}}</span>
 
 hey
 ================================================================================
@@ -192,8 +169,7 @@ Click here! Click here! Click here! Click here! Click here! Click here!
 <div>
   <button>
     Click here! Click here! Click here! Click here! Click here! Click here!
-  </button>
-  <button>
+  </button><button>
     Click here! Click here! Click here! Click here! Click here! Click here!
   </button>
 </div>
@@ -257,15 +233,12 @@ printWidth: 40
     src="/images/pansies.jpg"
     alt="about fedco bottom image"
     style="float: left;"
-  />
-  <strong>
-    We are a cooperative
-  </strong>
-  , one of the few seed companies so organized
-  in the United States. Because we do not have an individual owner or beneficiary,
-  profit is not our primary goal. Consumers own 60% of the cooperative and worker
-  members 40%. Consumer and worker members share proportionately in the cooperative’s
-  profits through our annual patronage dividends.
+  /><strong>We are a cooperative</strong>, one of the few seed companies so
+  organized in the United States. Because we do not have an individual owner or
+  beneficiary, profit is not our primary goal. Consumers own 60% of the
+  cooperative and worker members 40%. Consumer and worker members share
+  proportionately in the cooperative&#8217;s profits through our annual
+  patronage dividends.
 </p>
 ================================================================================
 `;
@@ -277,26 +250,26 @@ printWidth: 40
                                         | printWidth
 =====================================input======================================
 {{!-- TO FIX --}}
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce cursus massa vel augue 
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce cursus massa vel augue
 vestibulum facilisis in porta turpis. Ut faucibus lectus sit amet urna consectetur dignissim.
 Sam vitae neque quis ex dapibus faucibus at sed ligula. Nulla sit amet aliquet nibh.
 Vestibulum at congue mi. Suspendisse vitae odio vitae massa hendrerit mattis sed eget dui.
-Sed eu scelerisque neque. Donec <b>maximus</b> rhoncus pellentesque. Aenean purus turpis, vehicula 
-euismod ante vel, ultricies eleifend dui. Class aptent taciti sociosqu ad litora torquent per 
+Sed eu scelerisque neque. Donec <b>maximus</b> rhoncus pellentesque. Aenean purus turpis, vehicula
+euismod ante vel, ultricies eleifend dui. Class aptent taciti sociosqu ad litora torquent per
 conubia nostra, per inceptos himenaeos. Donec in ornare velit.</p>
 
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce cursus massa vel augue 
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce cursus massa vel augue
 vestibulum facilisis in porta turpis. Ut faucibus lectus sit amet urna consectetur dignissim.
 Sam vitae neque quis ex dapibus faucibus at sed ligula. Nulla sit amet aliquet nibh.
 Vestibulum at congue mi. Suspendisse vitae odio vitae massa hendrerit mattis sed eget dui.
-Sed eu scelerisque neque. Donec <a href="#"><b>maximus</b></a> rhoncus pellentesque. Aenean purus turpis, vehicula 
-euismod ante vel, ultricies eleifend dui. Class aptent taciti sociosqu ad litora torquent per 
+Sed eu scelerisque neque. Donec <a href="#"><b>maximus</b></a> rhoncus pellentesque. Aenean purus turpis, vehicula
+euismod ante vel, ultricies eleifend dui. Class aptent taciti sociosqu ad litora torquent per
 conubia nostra, per inceptos himenaeos. Donec in ornare velit.</p>
 
 =====================================output=====================================
 {{! TO FIX }}
 <p>
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce cursus massa vel augue 
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce cursus massa vel augue
 vestibulum facilisis in porta turpis. Ut faucibus lectus sit amet urna consectetur dignissim.
 Sam vitae neque quis ex dapibus faucibus at sed ligula. Nulla sit amet aliquet nibh.
 Vestibulum at congue mi. Suspendisse vitae odio vitae massa hendrerit mattis sed eget dui.
@@ -304,13 +277,13 @@ Sed eu scelerisque neque. Donec
   <b>
     maximus
   </b>
-  rhoncus pellentesque. Aenean purus turpis, vehicula 
-euismod ante vel, ultricies eleifend dui. Class aptent taciti sociosqu ad litora torquent per 
+  rhoncus pellentesque. Aenean purus turpis, vehicula
+euismod ante vel, ultricies eleifend dui. Class aptent taciti sociosqu ad litora torquent per
 conubia nostra, per inceptos himenaeos. Donec in ornare velit.
 </p>
 
 <p>
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce cursus massa vel augue 
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce cursus massa vel augue
 vestibulum facilisis in porta turpis. Ut faucibus lectus sit amet urna consectetur dignissim.
 Sam vitae neque quis ex dapibus faucibus at sed ligula. Nulla sit amet aliquet nibh.
 Vestibulum at congue mi. Suspendisse vitae odio vitae massa hendrerit mattis sed eget dui.
@@ -320,8 +293,8 @@ Sed eu scelerisque neque. Donec
       maximus
     </b>
   </a>
-  rhoncus pellentesque. Aenean purus turpis, vehicula 
-euismod ante vel, ultricies eleifend dui. Class aptent taciti sociosqu ad litora torquent per 
+  rhoncus pellentesque. Aenean purus turpis, vehicula
+euismod ante vel, ultricies eleifend dui. Class aptent taciti sociosqu ad litora torquent per
 conubia nostra, per inceptos himenaeos. Donec in ornare velit.
 </p>
 ================================================================================
