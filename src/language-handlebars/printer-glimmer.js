@@ -39,33 +39,34 @@ function print(path, options, print) {
       return group(concat(path.map(print, "body")));
     }
     case "ElementNode": {
-      let bim = "";
-      if (
-        options.htmlWhitespaceSensitivity !== "strict" &&
-        isNextNodeOfSomeType(path, ["ElementNode"])
-      ) {
-        bim = hardline;
-      }
+      const content = [group(printStartingTag(path, print))];
 
-      if (isVoid(n)) {
-        return concat([group(printStartingTag(path, print)), bim]);
-      }
+      if (!isVoid(n)) {
+        const isWhitespaceOnly = n.children.every((n) => isWhitespaceNode(n));
 
-      const isWhitespaceOnly = n.children.every((n) => isWhitespaceNode(n));
-
-      return concat([
-        group(printStartingTag(path, print)),
-        group(
+        const tail = group(
           concat([
-            isWhitespaceOnly && options.htmlWhitespaceSensitivity !== "strict" ? "" : indent(printChildren(path, options, print)),
+            isWhitespaceOnly && options.htmlWhitespaceSensitivity !== "strict"
+              ? ""
+              : indent(printChildren(path, options, print)),
             n.children.length && options.htmlWhitespaceSensitivity !== "strict"
               ? hardline
               : "",
             concat(["</", n.tag, ">"]),
           ])
-        ),
-        bim,
-      ]);
+        );
+
+        content.push(tail);
+      }
+
+      if (
+        options.htmlWhitespaceSensitivity !== "strict" &&
+        isNextNodeOfSomeType(path, ["ElementNode"])
+      ) {
+        content.push(hardline);
+      }
+
+      return concat(content);
     }
     case "BlockStatement": {
       const pp = path.getParentNode(1);
