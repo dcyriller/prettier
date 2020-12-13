@@ -39,8 +39,13 @@ function print(path, options, print) {
       return group(concat(path.map(print, "body")));
     }
     case "ElementNode": {
-      // TODO: make it whitespace sensitive
-      const bim = isNextNodeOfSomeType(path, ["ElementNode"]) ? hardline : "";
+      let bim = "";
+      if (
+        options.htmlWhitespaceSensitivity !== "strict" &&
+        isNextNodeOfSomeType(path, ["ElementNode"])
+      ) {
+        bim = hardline;
+      }
 
       if (isVoid(n)) {
         return concat([group(printStartingTag(path, print)), bim]);
@@ -52,8 +57,10 @@ function print(path, options, print) {
         group(printStartingTag(path, print)),
         group(
           concat([
-            isWhitespaceOnly ? "" : indent(printChildren(path, options, print)),
-            n.children.length ? hardline : "",
+            isWhitespaceOnly && options.htmlWhitespaceSensitivity !== "strict" ? "" : indent(printChildren(path, options, print)),
+            n.children.length && options.htmlWhitespaceSensitivity !== "strict"
+              ? hardline
+              : "",
             concat(["</", n.tag, ">"]),
           ])
         ),
@@ -162,6 +169,10 @@ function print(path, options, print) {
       return concat([n.key, "=", path.call(print, "value")]);
     }
     case "TextNode": {
+      if (options.htmlWhitespaceSensitivity === "strict") {
+        return concat([n.chars]);
+      }
+
       const maxLineBreaksToPreserve = 2;
       const isFirstElement = !getPreviousNode(path);
       const isLastElement = !getNextNode(path);
@@ -351,7 +362,7 @@ function printAttributesLike(path, print) {
 function printChildren(path, options, print) {
   return concat(
     path.map((childPath, childIndex) => {
-      if (childIndex === 0) {
+      if (childIndex === 0 && options.htmlWhitespaceSensitivity !== "strict") {
         return concat([softline, print(childPath, options, print)]);
       }
 

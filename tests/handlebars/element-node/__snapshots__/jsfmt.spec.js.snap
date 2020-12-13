@@ -133,7 +133,8 @@ printWidth: 80
   Hello
 </div>
 
-<div>
+<div
+>
   Hello
 </div>
 
@@ -141,21 +142,27 @@ printWidth: 80
   hi
 </div>
 
-<div>
+<div
+>
   A long enough string to trigger a line break that would prevent wrapping.
 </div>
 
-<div>
+<div
+>
   A long enough string to trigger a line break that would prevent wrapping more.
 </div>
 
-<div>
+<div
+>
   A long enough string to trigger a line break that would prevent wrapping more and more.
 </div>
 
-<div>
+<div
+>
   {{#block}}
+    
     {{hello}}
+
   {{/block}}
 </div>
 
@@ -165,6 +172,7 @@ printWidth: 80
 
 <div></div>
 <img />
+
 ================================================================================
 `;
 
