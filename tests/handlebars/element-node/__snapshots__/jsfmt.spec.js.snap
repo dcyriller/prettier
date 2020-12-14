@@ -133,8 +133,7 @@ printWidth: 80
   Hello
 </div>
 
-<div
->
+<div>
   Hello
 </div>
 
@@ -157,10 +156,9 @@ printWidth: 80
   A long enough string to trigger a line break that would prevent wrapping more and more.
 </div>
 
-<div
->
+<div>
   {{#block}}
-    
+
     {{hello}}
 
   {{/block}}

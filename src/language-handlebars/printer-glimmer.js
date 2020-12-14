@@ -1,7 +1,25 @@
 "use strict";
 
+function isLastNodeOfChildren(path) {
+  const parentNode = path.getParentNode(0);
+  return (
+    isParentOfSomeType(path, ["ElementNode"]) &&
+    parentNode.children[parentNode.children.length - 1] === path.getValue()
+  );
+}
+
 const {
-  builders: { concat, group, hardline, ifBreak, indent, join, line, softline },
+  builders: {
+    concat,
+    dedent,
+    group,
+    hardline,
+    ifBreak,
+    indent,
+    join,
+    line,
+    softline,
+  },
 } = require("../document");
 const { locStart, locEnd } = require("./loc");
 const clean = require("./clean");
@@ -44,15 +62,17 @@ function print(path, options, print) {
       if (!isVoid(n)) {
         const isWhitespaceOnly = n.children.every((n) => isWhitespaceNode(n));
 
+        const children = printChildren(path, options, print);
+
         const tail = group(
           concat([
             isWhitespaceOnly && options.htmlWhitespaceSensitivity !== "strict"
               ? ""
-              : indent(printChildren(path, options, print)),
+              : indent(children),
             n.children.length && options.htmlWhitespaceSensitivity !== "strict"
               ? hardline
               : "",
-            concat(["</", n.tag, ">"]),
+            indent(concat(["</", n.tag, ">"])),
           ])
         );
 
@@ -170,7 +190,17 @@ function print(path, options, print) {
       return concat([n.key, "=", path.call(print, "value")]);
     }
     case "TextNode": {
+      const lineBreaksCount = countNewLines(n.chars);
+
       if (options.htmlWhitespaceSensitivity === "strict") {
+        if (n.chars.match(/^\s+$/)) {
+          return concat(
+            new Array(lineBreaksCount || 1).fill(
+              isLastNodeOfChildren(path) ? dedent(hardline) : hardline
+            )
+          );
+        }
+
         return concat([n.chars]);
       }
 
@@ -178,7 +208,6 @@ function print(path, options, print) {
       const isFirstElement = !getPreviousNode(path);
       const isLastElement = !getNextNode(path);
       const isWhitespaceOnly = !/\S/.test(n.chars);
-      const lineBreaksCount = countNewLines(n.chars);
 
       let leadingLineBreaksCount = countLeadingNewLines(n.chars);
       let trailingLineBreaksCount = countTrailingNewLines(n.chars);

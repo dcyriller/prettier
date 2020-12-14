@@ -234,8 +234,7 @@ printWidth: 80
 </p>
 
 {{! newlines text }}
-<div
->
+<div>
   hi
   there
   how
@@ -247,8 +246,7 @@ printWidth: 80
 </div>
 
 {{! newlines text spaced }}
-<div
->
+<div>
 
   space above
 
@@ -259,16 +257,14 @@ printWidth: 80
 {{! newlines elems spaced }}
 <div>
 
-  <span
-  >space above</span>
+  <span>space above</span>
 
   <span>space below</span>
 
 </div>
 
 {{! newlines mixed }}
-<div
->
+<div>
   hi
   <span>there</span>
 
@@ -283,8 +279,7 @@ printWidth: 80
 
 {{! newlines elems }}
 <div>
-  <div
-  >
+  <div>
 
 
     <div></div>

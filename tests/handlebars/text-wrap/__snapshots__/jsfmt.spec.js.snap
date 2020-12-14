@@ -580,24 +580,25 @@ printWidth: 80
 </div>
 
 {{! Wrapping tags }}
-<div
->
-  <first>f</first> <first>f</first> <first>f</first> <first>f</first> <first
-  >f</first> <first>f</first>
+<div>
+  <first>f</first>
+  <first>f</first>
+  <first>f</first>
+  <first>f</first>
+  <first>f</first>
+  <first>f</first>
 </div>
 
 {{! Wrapping tags }}
 <div>
-  <first
-  >f</first><first>f</first><first>f</first><first>f</first><first
+  <first>f</first><first>f</first><first>f</first><first>f</first><first
   >f</first><first>f</first>
 </div>
 
 {{! Wrapping tags }}
 <div>
-  <first
-  >aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</first> <first
-  >f</first>
+  <first>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</first>
+  <first>f</first>
 </div>
 
 <div>
@@ -610,15 +611,15 @@ printWidth: 80
   before{stuff}after{stuff}after{stuff}after{stuff}after{stuff}after{stuff}{stuff}{stuff}after{stuff}after
 </div>
 
-<div
->
+<div>
 	before {{stuff}} after {{stuff}} after {{stuff}} after {{stuff}} after {{
     stuff
-  }} after {{stuff}}  {{stuff}}  {{stuff}} after {{stuff}} after
+  }} after {{stuff}}
+  {{stuff}}
+  {{stuff}} after {{stuff}} after
 </div>
 
-<div
->
+<div>
   Please state your <b>name</b> and <b>occupation</b> for the board of <b
   >school</b> directors.
 </div>
@@ -635,15 +636,13 @@ printWidth: 80
     First
   </div>
   Second
-  <div
-  >
+  <div>
     Third
   </div>
 </div>
 
 <div>
-  First <div
-  >
+  First <div>
     Second
   </div> Third
 </div>
@@ -653,7 +652,7 @@ printWidth: 80
 > First Second Third Fourth Fifth Sixth Seventh Eighth Ninth Tenth Eleventh Twelfth Thirteenth Fourteenth</div>
 
 {{! trailing whitespace }}
-  <div
+<div
 >First Second Third Fourth Fifth Sixth Seventh Eighth Ninth Tenth Eleventh Twelfth Thirteenth Fourteenth </div>
 
 {{! no leading or trailing whitespace }}
@@ -661,8 +660,7 @@ printWidth: 80
 >First Second Third Fourth Fifth Sixth Seventh Eighth Ninth Tenth Eleventh Twelfth Thirteenth Fourteenth</div>
 
 {{! translation leave text around tag }}
-<div
->
+<div>
   <span>
     First
   </span>,
@@ -672,8 +670,7 @@ printWidth: 80
 </div>
 
 <div>
-  <span
-  >
+  <span>
     First second third fourth fifth sixth seventh
   </span>,
   (<span
@@ -682,16 +679,13 @@ printWidth: 80
   </span>)
 </div>
 
-{{! this really should split across lines }} 
-<div
->
+{{! this really should split across lines }}
+<div>
   before{{stuff}}after{{stuff}}after{{stuff}}after{{stuff}}after{{
     stuff
   }}after{{stuff}}after{{stuff}}after{{stuff}}after{{stuff}}after{{
     stuff
-  }}after{{stuff}}after{{stuff}}after{{stuff}}after{{
-    stuff
-  }}after
+  }}after{{stuff}}after{{stuff}}after{{stuff}}after{{stuff}}after
 </div>
 
 {{! solitary whitespace }}
@@ -702,17 +696,18 @@ printWidth: 80
   fourth="fourth"
   fifth="fifth"
   sixth="sixth"
-> </div>
+>
+</div>
 
 {{! whitespace on newline }}
 <div>
   <div>
     First
-  </div> <div
-  >
+  </div>
+  <div>
     Second
-  </div> <div
-  >
+  </div>
+  <div>
     Third
   </div>
 </div>
@@ -722,8 +717,7 @@ printWidth: 80
   >{"Enough text to make this element wrap on to multiple lines when formatting"}</div> After</div>
 
 {{! around multiline element second pass }}
-<div
->
+<div>
   Before{" "}
   <div
   >
@@ -735,13 +729,11 @@ printWidth: 80
 </div>
 
 {{! dont preserve blank lines when contains text }}
-<div
->
+<div>
 
   <div>Zeroth</div>
 
-  <div
-  >First</div>
+  <div>First</div>
 
   Second
 
@@ -750,25 +742,22 @@ printWidth: 80
 {{! multiple expressions }}
 <div>
   {{header}}
-  {{
-    body
-  }}
+  {{body}}
   {{footer}}
 </div>
 
 {{! single expression child tags }}
-<div
->
+<div>
 	You currently have <strong>{{dashboardStr}}</strong> and <strong>{{
       userStr
     }}</strong>
 </div>
 
 {{! expression does not break }}
-<div
->texty text text text text text text text text text text text {{
+<div>texty text text text text text text text text text text text {{
     this.props.type
-  }} </div>
+  }}
+</div>
 
 // FIXME
 
