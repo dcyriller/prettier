@@ -62,13 +62,11 @@ function print(path, options, print) {
       if (!isVoid(n)) {
         const isWhitespaceOnly = n.children.every((n) => isWhitespaceNode(n));
 
-        const children = printChildren(path, options, print);
-
         const tail = group(
           concat([
             isWhitespaceOnly && options.htmlWhitespaceSensitivity !== "strict"
               ? ""
-              : indent(children),
+              : indent(printChildren(path, options, print)),
             n.children.length && options.htmlWhitespaceSensitivity !== "strict"
               ? hardline
               : "",
@@ -83,7 +81,7 @@ function print(path, options, print) {
         options.htmlWhitespaceSensitivity !== "strict" &&
         isNextNodeOfSomeType(path, ["ElementNode"])
       ) {
-        content.push(hardline);
+        content.push(group(hardline));
       }
 
       return concat(content);
