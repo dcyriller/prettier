@@ -8,6 +8,14 @@ function isLastNodeOfChildren(path) {
   );
 }
 
+function isFirstNodeOfChildren(path) {
+  const parentNode = path.getParentNode(0);
+  return (
+    isParentOfSomeType(path, ["ElementNode"]) &&
+    parentNode.children[0] === path.getValue()
+  );
+}
+
 const {
   builders: {
     concat,
@@ -197,6 +205,24 @@ function print(path, options, print) {
               isLastNodeOfChildren(path) ? dedent(hardline) : hardline
             )
           );
+        }
+
+        const [lead] = n.chars.match(/^\s+/) || [];
+        if (lead && isFirstNodeOfChildren(path)) {
+          const leadLineBreaksCount = countNewLines(lead);
+          return concat([
+            ...new Array(leadLineBreaksCount || 1).fill(hardline),
+            n.chars.replace(/^\s+/, ""),
+          ]);
+        }
+
+        const [tail] = n.chars.match(/\s+$/) || [];
+        if (tail && isLastNodeOfChildren(path)) {
+          const leadLineBreaksCount = countNewLines(lead);
+          return concat([
+            n.chars.replace(/\s+$/, ""),
+            ...new Array(leadLineBreaksCount || 1).fill(dedent(hardline)),
+          ]);
         }
 
         return concat([n.chars]);

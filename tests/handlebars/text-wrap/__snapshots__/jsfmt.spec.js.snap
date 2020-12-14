@@ -574,8 +574,7 @@ printWidth: 80
 
 =====================================output=====================================
 {{! Wrapping text }}
-<div
->
+<div>
   Some text that would need to wrap on to a new line in order to display correctly and nicely
 </div>
 
@@ -606,13 +605,12 @@ printWidth: 80
   >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur at mollis lorem.</div>after
 </div>
 
-<div
->
+<div>
   before{stuff}after{stuff}after{stuff}after{stuff}after{stuff}after{stuff}{stuff}{stuff}after{stuff}after
 </div>
 
 <div>
-	before {{stuff}} after {{stuff}} after {{stuff}} after {{stuff}} after {{
+  before {{stuff}} after {{stuff}} after {{stuff}} after {{stuff}} after {{
     stuff
   }} after {{stuff}}
   {{stuff}}
@@ -648,12 +646,13 @@ printWidth: 80
 </div>
 
 {{! leading whitespace }}
-<div
-> First Second Third Fourth Fifth Sixth Seventh Eighth Ninth Tenth Eleventh Twelfth Thirteenth Fourteenth</div>
+<div>
+  First Second Third Fourth Fifth Sixth Seventh Eighth Ninth Tenth Eleventh Twelfth Thirteenth Fourteenth</div>
 
 {{! trailing whitespace }}
 <div
->First Second Third Fourth Fifth Sixth Seventh Eighth Ninth Tenth Eleventh Twelfth Thirteenth Fourteenth </div>
+>First Second Third Fourth Fifth Sixth Seventh Eighth Ninth Tenth Eleventh Twelfth Thirteenth Fourteenth
+</div>
 
 {{! no leading or trailing whitespace }}
 <div
@@ -673,19 +672,18 @@ printWidth: 80
   <span>
     First second third fourth fifth sixth seventh
   </span>,
-  (<span
-  >
+  (<span>
     Second
   </span>)
 </div>
 
 {{! this really should split across lines }}
 <div>
-  before{{stuff}}after{{stuff}}after{{stuff}}after{{stuff}}after{{
+  before{{stuff}}after{{stuff}}after{{stuff}}after{{stuff}}after{{stuff}}after{{
     stuff
   }}after{{stuff}}after{{stuff}}after{{stuff}}after{{stuff}}after{{
     stuff
-  }}after{{stuff}}after{{stuff}}after{{stuff}}after{{stuff}}after
+  }}after{{stuff}}after{{stuff}}after{{stuff}}after
 </div>
 
 {{! solitary whitespace }}
@@ -719,8 +717,7 @@ printWidth: 80
 {{! around multiline element second pass }}
 <div>
   Before{" "}
-  <div
-  >
+  <div>
     {
       "Enough text to make this element wrap on to multiple lines when formatting"
     }
@@ -748,7 +745,7 @@ printWidth: 80
 
 {{! single expression child tags }}
 <div>
-	You currently have <strong>{{dashboardStr}}</strong> and <strong>{{
+  You currently have <strong>{{dashboardStr}}</strong> and <strong>{{
       userStr
     }}</strong>
 </div>

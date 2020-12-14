@@ -270,11 +270,12 @@ printWidth: 80
 
   how
 
-  are <strong
-  >you</strong>
+  are <strong>you</strong>
 
 
   are you fine today?
+
+
 </div>
 
 {{! newlines elems }}

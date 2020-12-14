@@ -132,7 +132,7 @@ printWidth: 40
 =====================================output=====================================
 {{! after }}
 <span>
-    foo <span>bar</span>
+  foo <span>bar</span>
 </span>
 
 {{! before }}
@@ -142,7 +142,8 @@ printWidth: 40
 
 {{! within }}
 <span>
-  foo <span> bar </span>
+  foo <span>
+    bar </span>
 </span>
 
 {{! break components }}
@@ -156,7 +157,7 @@ printWidth: 40
 </div>
 
 <div>
-   hello <strong>hi</strong>
+  hello <strong>hi</strong>
   <foo>sdkflsdfjk</foo>
 </div>;
 
@@ -534,9 +535,8 @@ Click here! Click here! Click here! Click here! Click here! Click here!
 =====================================output=====================================
 <button
 >Click here! Click here! Click here! Click here! Click here! Click here!</button>
-<button
->
-Click here! Click here! Click here! Click here! Click here! Click here!
+<button>
+  Click here! Click here! Click here! Click here! Click here! Click here!
 </button>
 <div>
   <button
@@ -1478,20 +1478,20 @@ printWidth: 40
 =====================================output=====================================
 <span>123</span>
 <span>
-123</span>
+  123</span>
 <span>123
 </span>
 <span>
-123
+  123
 </span>
 
 <div>123</div>
 <div>
-123</div>
+  123</div>
 <div>123
 </div>
 <div>
-123
+  123
 </div>
 
 ================================================================================
@@ -1684,9 +1684,12 @@ printWidth: 40
 <table>
   <thead>
     <tr>
-      <th> A </th>
-      <th> B </th>
-      <th> C </th>
+      <th>
+        A </th>
+      <th>
+        B </th>
+      <th>
+        C </th>
     </tr>
   </thead>
 </table>
