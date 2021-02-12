@@ -436,14 +436,20 @@ function print(path, options, print) {
 function printStartingTag(path, print) {
   const node = path.getValue();
 
-  const attributesLike = ["attributes", "modifiers", "comments", "blockParams"]
-    .filter((property) => isNonEmptyArray(node[property]))
-    .map((property) => [
-      line,
-      property === "blockParams"
-        ? printBlockParams(node)
-        : join(line, path.map(print, property)),
-    ]);
+  const attributesLike = ["attributes", "modifiers", "comments"]
+    .reduce((accumulator, type) => {
+      if (isNonEmptyArray(node[type])) {
+        return [...accumulator, ...node[type]];
+      }
+      return accumulator
+    }, [])
+    .sort((attrLikeA, attrLikeB) => locStart(attrLikeA) - locStart(attrLikeB))
+    // path.call expect a "name" (an object key), not an object
+    .map((attributeLike) => [line, path.call(print, attributeLike)]);
+
+  if (isNonEmptyArray(node.blockParams)) {
+    attributesLike.push(line, printBlockParams(node));
+  }
 
   return [
     "<",
