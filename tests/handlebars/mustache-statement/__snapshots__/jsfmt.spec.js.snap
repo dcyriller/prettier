@@ -589,14 +589,20 @@ foo{{/if}}
   {{campaignPic.userEmail}}
 </LinkTo>
 
-{{if abcdefghijklmnopqrstuvwxyz (t 'abcdefghijklmnopq') (t 'abcdefghijklmnopq')
+{{if
+  abcdefghijklmnopqrstuvwxyz
+  (t 'abcdefghijklmnopq')
+  (t 'abcdefghijklmnopq')
 }}
 
 {{#if (eq abcdefghijklmnopqrstuvwxyzabcdefgh abcdefghijklmnopqrstuvwxyzabcdefgh)
 }}
   foo{{/if}}
 
-{{some-helper abcdefghijklmnopqrstuvwxyz abcdefghijklmnopqrstuvwxyz abcdefghijkl
+{{some-helper
+  abcdefghijklmnopqrstuvwxyz
+  abcdefghijklmnopqrstuvwxyz
+  abcdefghijkl
 }}
 ================================================================================
 `;
@@ -670,14 +676,20 @@ foo{{/if}}
   {{campaignPic.userEmail}}
 </LinkTo>
 
-{{if abcdefghijklmnopqrstuvwxyz (t "abcdefghijklmnopq") (t "abcdefghijklmnopq")
+{{if
+  abcdefghijklmnopqrstuvwxyz
+  (t "abcdefghijklmnopq")
+  (t "abcdefghijklmnopq")
 }}
 
 {{#if (eq abcdefghijklmnopqrstuvwxyzabcdefgh abcdefghijklmnopqrstuvwxyzabcdefgh)
 }}
   foo{{/if}}
 
-{{some-helper abcdefghijklmnopqrstuvwxyz abcdefghijklmnopqrstuvwxyz abcdefghijkl
+{{some-helper
+  abcdefghijklmnopqrstuvwxyz
+  abcdefghijklmnopqrstuvwxyz
+  abcdefghijkl
 }}
 ================================================================================
 `;
